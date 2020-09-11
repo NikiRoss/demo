@@ -1,7 +1,6 @@
 package com.example.demo.security;
 
 import com.example.demo.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,18 +8,30 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
-
     @Autowired
     private UserService userService;
 
+    private static final String[] PUBLIC_MATCHERS = {
+            "/login",
+            "/webjars/**",
+            "/css/**",
+            "/js/**",
+            "/images/**",
+            "/",
+            "/about/**",
+            "/contact/**",
+            "/error/**/*",
+            "/console/**",
+            "/signup/**"
+    };
+
     @Bean
-    public BCryptPasswordEncoder passwordEncoder () {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -36,13 +47,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                .anyRequest().hasAnyRole("USER").and()
+                .antMatchers(PUBLIC_MATCHERS).permitAll()
+                .antMatchers("/admin/**", "admin/disable/**").hasAnyRole("ADMIN")
+                .anyRequest().hasAnyRole("USER", "ADMIN").and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/success")
-                .permitAll();
+                .defaultSuccessUrl("/home");
     }
 }
-
-

@@ -13,6 +13,6 @@ public class Tests {
 
     @Test
     public void createUser(){
-        userService.createUser("newuser", "newpass", "ROLE_USER");
+        //userService.createUser("newuser", "newpass", "ROLE_USER");
     }
 }

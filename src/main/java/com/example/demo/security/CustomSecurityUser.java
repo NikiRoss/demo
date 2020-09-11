@@ -1,8 +1,10 @@
 package com.example.demo.security;
 
 import com.example.demo.model.User;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 
 public class CustomSecurityUser extends User implements UserDetails {
 
@@ -11,10 +13,18 @@ public class CustomSecurityUser extends User implements UserDetails {
     public CustomSecurityUser () {}
 
     public CustomSecurityUser(User user) {
-        this.setAuthorities(user.getAuthorities());
-        this.setId(user.getId());
+        this.setUserAuthorities(user.getUserAuthorities());
+        this.setUserId(user.getUserId());
         this.setPassword(user.getPassword());
         this.setUsername(user.getUsername());
+        this.setEnabled(user.isEnabled());
+        this.setEmail(user.getEmail());
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return super.getUserAuthorities();
     }
 
     @Override
@@ -37,4 +47,3 @@ public class CustomSecurityUser extends User implements UserDetails {
         return true;
     }
 }
-

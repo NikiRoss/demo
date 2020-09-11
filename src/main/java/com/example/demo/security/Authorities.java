@@ -2,7 +2,6 @@ package com.example.demo.security;
 
 import com.example.demo.model.User;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 
 @Entity
@@ -15,16 +14,16 @@ public class Authorities implements GrantedAuthority {
     private User user;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Override
     public String getAuthority() {
         return authority;
     }

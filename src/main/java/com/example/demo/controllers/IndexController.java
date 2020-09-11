@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 
@@ -39,13 +38,13 @@ public class IndexController {
         return "login";
     }
 
-    @GetMapping("/success")
+    @GetMapping("/home")
     public String success(Model model, Principal principal) {
-        System.out.println("success");
+        System.out.println("home");
         User user = (User) userService.loadUserByUsername(principal.getName());
         System.out.println(user.toString());
         model.addAttribute("user", user);
-        return "success";
+        return "home";
     }
     @GetMapping("/newtemp")
     public String newTemp(Model model, @ModelAttribute User user, Principal principal) {

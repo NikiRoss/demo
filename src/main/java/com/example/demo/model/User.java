@@ -9,48 +9,70 @@ import java.util.Set;
 @Entity
 public class User {
 
-    private Long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private long userId;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name ="password")
     private String password;
 
-    private Set<Authorities> authorities = new HashSet<>();
+    @Column(name ="email")
+    private String email;
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "user_id")
-    public Long getId() {
+    private boolean enabled;
+
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="user")
+    private Set<Authorities> userAuthorities = new HashSet<>();
+
+    public long getUserId() {
         return userId;
     }
-    public void setId(Long id) {
-        this.userId = id;
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
+
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="user")
-    public Set<Authorities> getAuthorities() {
-        return authorities;
-    }
-    public void setAuthorities(Set<Authorities> authorities) {
-        this.authorities = authorities;
+
+    public String getEmail() {
+        return email;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", authorities=" + authorities +
-                '}';
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Set<Authorities> getUserAuthorities() {
+        return userAuthorities;
+    }
+
+    public void setUserAuthorities(Set<Authorities> userAuthorities) {
+        this.userAuthorities = userAuthorities;
     }
 }
