@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.TokenDao;
 import com.example.demo.model.User;
-import com.example.demo.repository.AuthoritiesDao;
-import com.example.demo.repository.UserDao;
+import com.example.demo.dao.AuthoritiesDao;
+import com.example.demo.dao.UserDao;
+import com.example.demo.model.VerificationToken;
 import com.example.demo.security.CustomSecurityUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private AuthoritiesDao authoritiesDao;
+
+    @Autowired
+    private TokenDao tokenDao;
 
 
     public void save(User user) {
@@ -74,6 +79,16 @@ public class UserService implements UserDetailsService {
         System.out.println(">>> user log in OK");
         System.out.println(">>> userDetails:  " + user.getUsername() + user.getPassword());
         return new CustomSecurityUser(user);
+    }
+
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return tokenDao.findByToken(VerificationToken);
+    }
+
+
+    public void createVerificationToken(User user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        tokenDao.save(myToken);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.dao;
 
 import com.example.demo.security.Authorities;
 import org.springframework.data.repository.CrudRepository;

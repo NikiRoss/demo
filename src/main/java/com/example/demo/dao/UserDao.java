@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.dao;
 
 import com.example.demo.model.User;
 import org.springframework.data.jdbc.repository.query.Query;
