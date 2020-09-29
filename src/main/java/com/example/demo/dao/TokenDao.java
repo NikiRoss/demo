@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface TokenDao extends CrudRepository<VerificationToken, Long> {
 
     VerificationToken findByToken(String token);
+    VerificationToken findById(long id);
 }

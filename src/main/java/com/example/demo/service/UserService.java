@@ -90,6 +90,15 @@ public class UserService implements UserDetailsService {
         VerificationToken myToken = new VerificationToken(token, user);
         tokenDao.save(myToken);
     }
+/*
+    @Override
+    public VerificationToken generateNewVerificationToken(final String existingVerificationToken) {
+        VerificationToken vToken = tokenRepository.findByToken(existingVerificationToken);
+        vToken.updateToken(UUID.randomUUID()
+                .toString());
+        vToken = tokenRepository.save(vToken);
+        return vToken;
+    }*/
 
 }
 
